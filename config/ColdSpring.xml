@@ -1,0 +1,112 @@
+<beans>
+<!-- This is your Model-Glue configuration -->
+<bean id="modelglue.modelGlueConfiguration" class="ModelGlue.gesture.configuration.ModelGlueConfiguration">
+
+	<!-- Be sure to change these to false when you go to production! -->
+	<property name="reload"><value>true</value></property>
+	<property name="debug"><value>false</value></property>
+	
+	<!-- Name of the URL variable that states which event-handler to run -->
+	<property name="eventValue"><value>event</value></property>
+	<!-- Default event-handler -->
+	<property name="defaultEvent"><value>default</value></property>
+	<!-- Execute this event when the requested event is missing. Won't work if generationEnabled=true and in development mode! -->
+	<property name="missingEvent"><value>page.missing</value></property>
+	<!-- Execute this event when an error occurs. -->
+	<property name="defaultExceptionHandler"><value>page.error</value></property>
+	<!-- Change this if you want to change the name of the script executing ModelGlue -->
+	<property name="defaultTemplate"><value>index.cfm</value></property>
+	
+	<!-- Controls reloading -->
+	<property name="reloadPassword"><value>true</value></property>
+	<property name="reloadKey"><value>init</value></property>
+
+	<!-- Where to find necessary files -->
+	<property name="configurationPath"><value>config/ModelGlue.xml</value></property>
+	<property name="applicationMapping"><value>/PlantOMatic</value></property>
+	<property name="viewMappings"><value>/PlantOMatic/views</value></property>
+	<property name="helperMappings"><value>/PlantOMatic/helpers</value></property>
+	
+	<!-- Generate unknown events when in development mode?  (reload=false) -->
+	<property name="generationEnabled"><value>false</value></property>
+	
+	<!-- Set the default cache timeout in seconds -->
+	<property name="defaultCacheTimeout"><value>60</value></property>  	
+	
+	<!-- Scaffolding config -->
+	<!-- Turning this off will disable any scaffold generation. Turning this on requires the reload setting above to also be on.-->	
+	<property name="rescaffold"><value>false</value></property>
+	<!-- Where do you want generated views to be saved to? -->
+	<property name="generatedViewMapping"><value>views</value></property>
+	<!--This directory structure should already exists. ModelGlue will create the Scaffolds.xml file and overwrite as needed.-->
+	<property name="scaffoldPath"><value>config/scaffolds/Scaffolds.xml</value></property>
+	<!-- What scaffold generation patterns should ModelGlue use if you do not specify in the <scaffold type=""> attribute? .-->
+	<property name="defaultScaffolds"><value>list,edit,view,commit,delete</value></property>
+	
+	<!-- See documentation or ModelGlueConfiguration.cfc for additional options. -->
+</bean>
+
+<bean id="CFUniFormConfigBean" class="coldspring.beans.factory.config.MapFactoryBean">
+	<property name="SourceMap">
+		<map>
+			<entry key="jQuery"><value>www/js/jquery-1.3.2.min.js</value></entry>
+			<entry key="renderer"><value>/views/layout/renderValidationErrors.cfm</value></entry>
+			<entry key="uniformCSS"><value>www/cfuniform/css/uni-form.css</value></entry>
+			<entry key="uniformJS"><value>www/cfuniform/js/uni-form.jquery.js</value></entry>
+			<entry key="validationJS"><value>www/cfuniform/js/jquery.validate-1.5.1.min.js</value></entry>
+			<entry key="dateCSS"><value>www/cfuniform/css/jquery.ui.datepicker.css</value></entry>
+			<entry key="dateJS"><value>www/cfuniform/js/ui.datepicker.packed.js</value></entry>
+			<entry key="timeCSS"><value>www/cfuniform/css/jquery.timeentry.css</value></entry>
+			<entry key="timeJS"><value>www/cfuniform/js/jquery.timeentry-1.4.2.min.js</value></entry>
+			<entry key="maskJS"><value>www/cfuniform/js/jquery.maskedinput-1.2.1.pack.js</value></entry>
+			<entry key="textareaJS"><value>www/cfuniform/jquery.prettyComments-1.4.js</value></entry>
+			<entry key="dateSetup">
+				<map>
+					<entry key="buttonImage"><value>www/cfuniform/images/calendar.png</value></entry>
+				</map>
+			</entry>
+			<entry key="textareaSetup">
+				<map>
+					<entry key="maxHeight"><value>800</value></entry>
+					<entry key="animate"><value>true</value></entry>
+					<entry key="animationSpeed"><value>slow</value></entry>
+					</map>
+			</entry>
+			<entry key="timeSetup">
+				<map>
+					<entry key="show24Hours"><value>true</value></entry>
+					<entry key="showSeconds"><value>false</value></entry>
+				</map>
+			</entry>
+		</map>
+	</property>
+</bean>
+
+<bean id="SimpleInstanceFactory" class="PlantOMatic.model.SimpleInstanceFactory">
+	<constructor-arg name="ObjectPathMap"><ref bean="SimpleInstanceFactoryConfig" /></constructor-arg>
+</bean>
+	
+<bean id="SimpleInstanceFactoryConfig" class="coldspring.beans.factory.config.MapFactoryBean">
+	<property name="SourceMap">
+		<map>
+			<entry key="CurrentPage"><value>PlantOMatic.model.CurrentPage</value></entry>
+			<entry key="UserMessageContainer"><value>PlantOMatic.model.UserMessageContainer</value></entry>
+		</map>
+	</property>
+</bean>		
+<!-- Put definitions for your own beans and services here -->
+
+<!-- ORM Framework Configuration -->
+	
+	<alias alias="ormAdapter" name="ormAdapter.Reactor" />
+	<alias alias="ormService" name="ormService.Reactor" />
+	<bean id="reactorConfiguration" class="reactor.config.config">
+		<constructor-arg name="pathToConfigXml"><value>/PlantOMatic/config/reactor.xml</value></constructor-arg>
+		<property name="project"><value>PlantOMatic</value></property>
+		<property name="dsn"><value>PlantOMatic</value></property>
+		<property name="type"><value>mysql</value></property>
+		<property name="mapping"><value>/PlantOMatic/model</value></property>
+		<property name="mode"><value>development</value></property>
+	</bean> 	
+
+</beans>

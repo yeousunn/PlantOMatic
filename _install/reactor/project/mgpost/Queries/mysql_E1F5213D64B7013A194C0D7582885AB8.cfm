@@ -1,0 +1,1 @@
+SELECT  `categories`.`categoryID` AS `categoryID`,  `categories`.`category` AS `category` FROM `categories` AS `categories` WHERE `categories`.`categoryID` = <cfqueryparam cfsqltype="cf_sql_integer"    value="#arguments.Query.getValue(1)#" />  

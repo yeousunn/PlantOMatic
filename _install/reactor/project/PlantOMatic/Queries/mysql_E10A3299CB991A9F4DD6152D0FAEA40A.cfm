@@ -1,0 +1,1 @@
+SELECT  `Plant`.`PlantID` AS `PlantID`,  `Plant`.`Symbol` AS `Symbol`,  `Plant`.`SynonymSymbol` AS `SynonymSymbol`,  `Plant`.`ScientificNameWithAuthor` AS `ScientificNameWithAuthor`,  `Plant`.`CommonName` AS `CommonName`,  `Plant`.`Family` AS `Family` FROM `Plant` AS `Plant`  

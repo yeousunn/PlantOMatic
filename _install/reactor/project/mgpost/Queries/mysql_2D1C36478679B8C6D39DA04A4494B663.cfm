@@ -1,0 +1,1 @@
+SELECT  `bookmarks`.`bookmarkID` AS `bookmarkID`,  `bookmarks`.`name` AS `name`,  `bookmarks`.`url` AS `url` FROM `bookmarks` AS `bookmarks` WHERE `bookmarks`.`bookmarkID` = <cfqueryparam cfsqltype="cf_sql_integer"    value="#arguments.Query.getValue(1)#" />  
